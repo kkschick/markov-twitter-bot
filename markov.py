@@ -24,21 +24,30 @@ def make_text(chains):
     """Takes a dictionary of markov chains and returns random text
     based off an original text."""
 
-    initial = random.randrange(0, len(chains.keys())-1)
-    keys = chains.keys()
+    list_of_keys = chains.keys()
+
+    list_of_strings = []
+
+    key = random.choice(list_of_keys)
+    value = chains[key]
+    select_value = random.choice(value)
+
+    list_of_strings.extend([key[0], key[1], select_value])
+
+    while True:
+        key = (list_of_strings[-2], list_of_strings[-1])
+        value = chains.get(key, "None")
+        if value == "None":
+            break
+        select_value = random.choice(value)
+        list_of_strings.append(select_value)
 
     random_string = ''
-    
-    key = keys[initial]
-    value = chains[key]
 
-    if len(value) == 1:
-        select_value = value[0]
-    else:
-        select_value = str(value[random.randrange(0, len(value)-1)])
+    for item in list_of_strings:
+        random_string += item + ' '
 
-    random_string = random_string + key[0] + " " + key[1] + " " + select_value
-
+    random_string = random_string.rstrip().capitalize() + '.'
     return random_string
 
 def main():
