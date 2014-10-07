@@ -4,10 +4,9 @@ import sys
 import string
 import random
 
-def make_chains(corpus):
+def make_chains(corpus, markov_dict):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
-    markov_dict = {}
 
     list_of_words = corpus.strip().split()
     
@@ -50,20 +49,28 @@ def make_text(chains):
     random_string = random_string.rstrip().capitalize() + '.'
     return random_string
 
+def open_files(filename, markov_dict):
+
+    text = open(filename)
+    text = text.read()
+    
+    dict_of_words = make_chains(text, markov_dict)
+
+
+    # input_text = ''
+    # for char in text:
+    #     if char not in string.punctuation:
+    #         input_text += char
+    return dict_of_words
+
 def main():
     args = sys.argv
-
+    markov_dict = {}
     # Change this to read input_text from a file
-    text = open(args[1])
-    text = text.read()
+    for item in args[1:]:
+        markov_dict = open_files(item, markov_dict)
 
-    input_text = ''
-    for char in text:
-        if char not in string.punctuation:
-            input_text += char
-
-    chain_dict = make_chains(input_text)
-    random_text = make_text(chain_dict)
+    random_text = make_text(markov_dict)
     print random_text
 
 if __name__ == "__main__":
