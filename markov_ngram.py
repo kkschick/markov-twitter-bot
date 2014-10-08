@@ -3,6 +3,7 @@
 import sys
 # import string
 import random
+import twitter
 
 
 def make_chains(corpus, markov_dict, n):
@@ -61,34 +62,27 @@ def make_text(chains, n):
 
     #adds the value to end of list_of_strings
     list_of_strings.append(select_value)
+    random_string = " ".join(list_of_strings)
 
-    #finds length of first key and value
-    length = len(select_value)
+    #finds length of random_string
+    length = len(random_string)
 
-    for i in range(len(key)):
-        length += len(key[i])
-
-    while length <= 1400:       #makes sure final string is short enough for Twitter
+    while length <= 140:       #makes sure final string is short enough for Twitter
         #defines the key based on last n words in list_of_strings
         key = tuple(list_of_strings[(-n + x)] for x in range(n))        
-        #finds key in dictionary.  If key exists, returns value.  Else, returns "None"
-        value = chains.get(key, "None") 
-        if value == "None": #exits loop if "None"
+        #finds key in dictionary.  If key exists, returns value.  Else, returns None
+        value = chains.get(key, None) 
+        if value == None: #exits loop if None
             break
         #randomly chooses one of the items in the list of values
         select_value = random.choice(value) 
-        length += len(select_value) #increments length by length of select_value
         list_of_strings.append(select_value) #adds select_value to list_of_strings
+        #defines new_string that is select_value added to random_string
+        new_string = random_string + " " + select_value 
+        length = len(new_string) #finds length of new_string
+        if length <= 140: #assigns random_string to new_string if new_string <= 140 char
+            random_string = new_string
 
-    #Initializes string for output
-    random_string = ''
-
-    #Adds all items in list_of_strings to output string
-    for item in list_of_strings:
-        random_string += item + ' '
-
-    #removes spaces at end and adds a period
-    random_string = random_string.rstrip() + '.'
     return random_string
 
 def open_files(filename, markov_dict, n):
