@@ -86,14 +86,11 @@ def make_text(chains, n):
         #defines new_string that is select_value added to random_string
         new_string = random_string + " " + select_value 
         length = len(new_string) #finds length of new_string
-        if length <= 140: #assigns random_string to new_string if new_string <= 140 char
+        if length <= 137: #assigns random_string to new_string if new_string <= 140 char
             random_string = new_string
 
+    random_string = random_string + '...'
     return random_string
-
-def write_tweets(random_text):
-
-    status = api.PostUpdate(random_text)
 
 
 def open_files(filename, markov_dict, n):
@@ -128,10 +125,11 @@ def main():
     # Runs make_text on the markov_dict
     random_text = make_text(markov_dict, 2)
 
+    #Tweets random_text (super slow)
+    api.PostUpdate(random_text)
+
     # Prints randomly generated text
     print random_text
-
-    write_tweets(random_text)
 
 if __name__ == "__main__":
     main()
