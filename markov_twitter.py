@@ -27,7 +27,14 @@ def make_text(chains):
 
     list_of_strings = []
 
+    starting_words = []
+
+    for item in list_of_keys:
+        if item[0] == 'I' or item[0] == 'The' or item[0] == 'There' or item[0] == 'It':
+            starting_words.append(item)
+
     key = random.choice(list_of_keys)
+
     value = chains[key]
     select_value = random.choice(value)
 
