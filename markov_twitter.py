@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-import string
+# import string
 import random
 
 def make_chains(corpus, markov_dict):
@@ -33,7 +33,7 @@ def make_text(chains):
         if item[0] == 'I' or item[0] == 'The' or item[0] == 'There' or item[0] == 'It':
             starting_words.append(item)
 
-    key = random.choice(list_of_keys)
+    key = random.choice(starting_words)
 
     value = chains[key]
     select_value = random.choice(value)
@@ -55,7 +55,7 @@ def make_text(chains):
     for item in list_of_strings:
         random_string += item + ' '
 
-    random_string = random_string.rstrip().capitalize() + '.'
+    random_string = random_string.rstrip() + '.'
     return random_string
 
 def open_files(filename, markov_dict):
@@ -63,11 +63,12 @@ def open_files(filename, markov_dict):
     text = open(filename)
     text = text.read()
 
-    input_text = ''
-    for char in text:
-        if char not in string.punctuation:
-            input_text += char
+    # input_text = ''
+    # for char in text:
+    #     if char not in string.punctuation:
+    #         input_text += char
 
+    input_text = text
     dict_of_words = make_chains(input_text, markov_dict)
 
     return dict_of_words
