@@ -3,6 +3,9 @@
 import sys
 # import string
 import random
+import twitter
+
+api = twitter.Api()
 
 def make_chains(corpus, markov_dict):
     """Takes an input text as a string and returns a dictionary of
