@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-# import string
+import string
 import random
 import twitter
 
@@ -40,15 +40,15 @@ def make_text(chains, n):
     list_of_strings = []
 
     # Create an empty list of words that start sentences
-    starting_words = []
+    capital_words = []
 
-    # Loop through the dict keys and find the starting words and add them to the starting_words list
+    # Loop through the dict keys and find the starting words and add them to the capital_words list
     for item in list_of_keys:
-        if item[0] == 'I' or item[0] == 'The' or item[0] == 'There' or item[0] == 'It':
-            starting_words.append(item)
+        if item[0][0] in string.ascii_uppercase:
+            capital_words.append(item)
 
-    #chooses one of the tuples from starting_words to use as first key
-    key = random.choice(starting_words)
+    #chooses one of the tuples from capital_words to use as first key
+    key = random.choice(capital_words)
 
     #finds value associated with that key
     value = chains[key]
